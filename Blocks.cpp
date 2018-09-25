@@ -56,6 +56,7 @@ Block_I::Block_I(int y, int x) : Block(y, x) {
 					 {0, 1, 1, 1, 1}, 
 					 {0, 0, 0, 0, 0}, 
 					 {0, 0, 0, 0, 0} } );
+	MoveBy(-1, 0);
 };
 
 
