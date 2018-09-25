@@ -120,7 +120,7 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 					break;
 			}
 		}
-		_printBuf[i] += string(24 - _printBuf.size(), ' ') + "|";
+		_printBuf[i] += string(78 - _printBuf[i].size(), ' ') + "|";
 	}
 	_score += 100;
 	_printBuf[7] += " +--------------+";

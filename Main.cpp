@@ -4,7 +4,7 @@
 #include <conio.h>
 
 const int width = 30;
-const int height = 24;
+const int height = 22;
 
 enum Key { Up = 72, Down = 80, Left = 75, Right = 77 };
 
@@ -13,12 +13,13 @@ int main() {
 	TetrisFactory   factory;
 
 	int             input;
-	int             count = 4;
+	int             count;
 	
 	Tetris* game = factory.MakeTetris(width, height);
 	Block* block = factory.MakeBlock(width);
 	Block* nextBlock = factory.MakeBlock(width);
 	
+	count = 4;
 	
 	while (true) {
 		if (count-- == 0) {
