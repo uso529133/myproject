@@ -17,6 +17,9 @@ public:
 	// getter
 	const Point& getLocation();
 	const vector<vector<bool> >& getArray();
+	bool hasChanged();
+	// setter
+	void setChanged();	
 	// display configuration
 	void setFps(int fps);
 	
@@ -29,8 +32,7 @@ protected:
 private:
 	// Block position in TetrisMap
 	Point _position;
-	int _freq;
-	int _lastFreq;
+	bool _hasChanged;
 };
 
 #endif /* BLOCK_H */

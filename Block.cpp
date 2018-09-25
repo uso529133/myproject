@@ -1,11 +1,13 @@
 
 #include "Block.h"
 
-Block::Block(int y, int x) : _position({x, y}), _canRotate(true), _array(5, vector<bool>(5, true)) {}
+Block::Block(int y, int x) : _position({x, y}), _canRotate(true), _array(5, vector<bool>(5, true)), _hasChanged(true) {}
 
 void Block::MoveBy(int dy, int dx) {
 	_position.x += dx;
 	_position.y += dy;
+	
+	setChanged();
 }
 
 void Block::Rotate() {
@@ -17,6 +19,7 @@ void Block::Rotate() {
 			_array[i][j] = tempArray[4 - j][i];
 		}
 	}
+	setChanged();
 }
 
 const Point& Block::getLocation() {
@@ -26,3 +29,8 @@ const Point& Block::getLocation() {
 const vector<vector<bool> >& Block::getArray() {
 	return _array;
 }
+
+void Block::setChanged() { _hasChanged = true; }
+
+bool Block::hasChanged() { return _hasChanged; }
+

@@ -27,8 +27,9 @@ private:
 	// map infos
 	vector<vector<int> > _map;
 	int _width, _height;
-	// buffer for print
+	// variables for print
 	string _printBuf;
+	bool _hasChanged;
 };
 
 #endif /* TETRIS_H */
