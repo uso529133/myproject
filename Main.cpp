@@ -66,7 +66,7 @@ int main() {
 			}
 		}
 		
-		
+		game->RemoveCompleted();
 		game->RefreshBuffer(block);
 		game->PrintBuffer(block);
 		
