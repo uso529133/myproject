@@ -7,7 +7,7 @@ using namespace std;
 enum BlockType { Empty = 0, Normal = 1, v_Wall = 2, h_Wall = 3, Edge = 4};
 
 Tetris::Tetris(int width, int height) 
- : _width(width), _height(height), _map(height, vector<int>(width, BlockType::Empty)), _printBuf(vector<string>(height)), _score(0) { BuildWalls(); }
+ : _width(width), _height(height), _map(height, vector<int>(width, BlockType::Empty)), _printBuf(vector<string>(height)), _score(0) { BuildWalls(); system("Color 3B"); }
 
 void Tetris::BuildWalls() {
  	for (int i = 0; i < _width; ++i) {
@@ -144,10 +144,13 @@ const int Tetris::GetScore() {
 void Tetris::PrintBuffer(Block* block) {
 	if (block->hasChanged()) {
 		system("cls");
-		for (int i = 0; i < _height; ++i) {
+		for (int i = 0; i < _height-2; ++i) {
 			cout << _printBuf[i] << '\n';
 		}
-
+		for (int i = _height-2; i < _height; ++i) {
+			cout << _printBuf[i] << '\n';
+		}
+		
 		block->setChanged(false);
 	}
 }
