@@ -10,12 +10,12 @@ class Tetris {
 public:
 	Tetris(int width = 10, int height = 15);
 	
-	bool isDuplicateWith(Block block);
-	void ApplyBlock(Block block);
+	bool isDuplicateWith(Block* block);
+	void ApplyBlock(Block* block);
 	// remove completed lines
 	int RemoveCompleted();
 	// print
-	void RefreshBuffer(Block block);
+	void RefreshBuffer(Block* block);
 	void PrintBuffer();
 
 private:

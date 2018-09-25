@@ -6,12 +6,13 @@ const int height = 20;
 	
 int main() {
 	Tetris game(width, height);
-	Block aBlock(1, width / 2 - 2);
+	Block* aBlock = new Block(1, width / 2 - 2);
 	
 	while (true) {
-		aBlock.MoveBy(1, 0);
+		aBlock->MoveBy(1, 0);
 		if (game.isDuplicateWith(aBlock)) {
-			aBlock.MoveBy(-1, 0);
+			game.ApplyBlock(aBlock);
+			aBlock = new Block(1, width / 2 - 2);
 		}
 
 		game.RefreshBuffer(aBlock);
