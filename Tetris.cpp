@@ -7,12 +7,7 @@ using namespace std;
 enum BlockType { Empty = 0, v_Wall, h_Wall, Edge, Normal};
 
 Tetris::Tetris(int width, int height) 
- : _width(width), _height(height), _map(height, vector<int>(width, BlockType::Empty)) { BuildWalls();
- 
- for (int i = 1; i < _width - 2; ++i) _map[_height - 3][i] = BlockType::Normal;
- for (int i = 1; i < _width - 2; ++i) _map[_height - 2][i] = BlockType::Normal;
- for (int i = 1; i < _width - 2; ++i) _map[_height - 4][i] = BlockType::Normal;
-  }
+ : _width(width), _height(height), _map(height, vector<int>(width, BlockType::Empty)) { BuildWalls(); }
 
 void Tetris::BuildWalls() {
  	for (int i = 0; i < _width; ++i) {
@@ -124,7 +119,7 @@ int Tetris::RemoveCompleted() {
 	int score;
 	
 	for (int line = _height - 1; line > 1; --line) {
-		if (isCompleteLine(line)) {
+		while (isCompleteLine(line)) {
 			RemoveLine(line);
 			++score;
 		}
@@ -140,20 +135,13 @@ bool Tetris::isCompleteLine(int line) {
 }
 
 void Tetris::RemoveLine(int line) {
-	
-	for (int i = 1; i < _width - 1; ++i) {
-			_map[line][i] = BlockType::Empty;
-	}
-	
-	for (int i = line; i > 1; --line) {
+	for (int i = line; i > 1; --i) {
 		for (int j = 1; j < _width - 1; ++j) {
-			_map[i][j] = _map[i + 1][j];
+			_map[i][j] = _map[i - 1][j];
 		}
 	}
-/*
-	for (int i = 1; i < _width; ++i) {
+	for (int i = 1; i < _width - 1; ++i) {
 		_map[1][i] = BlockType::Empty;
 	}
-*/
 }
 
