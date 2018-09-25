@@ -26,6 +26,25 @@ void Tetris::BuildWalls() {
 	 }
 }
 
+
+
+bool Tetris::isDuplicateWith(Block block) {
+	const int posY = block.getLocation()->y;
+	const int posX = block.getLocation()->x;
+
+	for (int i = 0; i < 5; ++i) {
+		for (int j = 0; j < 5; ++j) {
+			if (posY + i >= 0 && posX + j >= 0 && posY + i < height; 
+			&& posX + j < width && _map[posY][posX] != BlockType::Empty ) { return true; }
+		}
+	}
+	
+	return false;
+}
+
+
+
+
 void Tetris::RefreshBuffer(Block block) {
 	_printBuf.clear();
 
