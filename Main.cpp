@@ -44,6 +44,7 @@ int main() {
 				switch (getch()) {
 					case Key::Up:
 						block->Rotate();
+						if (game->isDuplicateWith(block)) { block->UnRotate(); }
 						break;
 					case Key::Down:
 						block->MoveBy(1, 0);
@@ -59,10 +60,10 @@ int main() {
 						break;
 				}
 			} else if (input == 32) {
-				while (!game->isDuplicateWith(block)) {
-					block->MoveBy(1, 0);
-				}
+				while (!game->isDuplicateWith(block)) { block->MoveBy(1, 0); }
 				block->MoveBy(-1, 0);
+				game->ApplyBlock(block);
+				block = factory.MakeBlock(width);
 			}
 		}
 		

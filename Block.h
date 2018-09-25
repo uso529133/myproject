@@ -14,6 +14,7 @@ public:
 	// for translating
 	void MoveBy(int dx, int dy);
 	void Rotate();
+	void UnRotate();
 	// getter
 	const Point& getLocation();
 	const vector<vector<bool> >& getArray();

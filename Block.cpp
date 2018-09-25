@@ -22,6 +22,18 @@ void Block::Rotate() {
 	setChanged(true);
 }
 
+void Block::UnRotate() {
+	if (!_canRotate) return;
+	auto tempArray(_array);
+	
+	for (int i = 0; i < 5; ++i) {
+		for (int j = 0; j < 5; ++j) {
+			_array[i][j] = tempArray[j][4 - i];
+		}
+	}
+	setChanged(true);
+}
+
 const Point& Block::getLocation() {
 	return _position;
 }
