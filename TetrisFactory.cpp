@@ -30,7 +30,7 @@ Block* TetrisFactory::MakeBlock(int width) {
 			block = new Block_Z(0, width / 2 - 2);
 			break;
 		case 6:
-			block = new Block_I(0, width / 2 - 2);
+			block = new Block_I(-1, width / 2 - 2);
 			break;
 	}
 	

@@ -7,7 +7,7 @@ using namespace std;
 enum BlockType { Empty = 0, v_Wall, h_Wall, Edge, Normal};
 
 Tetris::Tetris(int width, int height) 
- : _width(width), _height(height), _map(height, vector<int>(width, BlockType::Empty)) { BuildWalls(); }
+ : _width(width), _height(height), _map(height, vector<int>(width, BlockType::Empty)), _printBuf(vector<string>(height)), _score(0) { BuildWalls(); }
 
 void Tetris::BuildWalls() {
  	for (int i = 0; i < _width; ++i) {
@@ -65,7 +65,7 @@ void Tetris::ApplyBlock(Block* block) {
 void Tetris::RefreshBuffer(Block* block) {
 	if (!block->hasChanged()) return;
 	
-	_printBuf.clear();
+	for (int i = 0; i < _height; ++i) { _printBuf[i].clear(); }
 
 	auto tempMap(_map);
 
@@ -86,37 +86,44 @@ void Tetris::RefreshBuffer(Block* block) {
 		for (int j = 0; j < _width; ++j) {
 			switch(tempMap[i][j]) {
 				case BlockType::h_Wall:
-					_printBuf += "|";
+					_printBuf[i] += "|";
 					break;
 				case BlockType::v_Wall:
-					_printBuf += "--";
+					_printBuf[i] += "--";
 					break;
 				case BlockType::Edge:
-					_printBuf += "+";
+					_printBuf[i] += "+";
 					break;
 				case BlockType::Normal:
-					_printBuf += "бс";
+					_printBuf[i] += "бс";
 					break;
 				case BlockType::Empty:
-					_printBuf += "  ";
+					_printBuf[i] += "  ";
 					break;
 			}
 		}
-		_printBuf += "\n";
 	}
+	_printBuf[_height / 2 - 1] += "  * Score: " + to_string(_score);
+	
+}
+
+const int Tetris::GetScore() {
+	return _score;
 }
 
 void Tetris::PrintBuffer(Block* block) {
 	if (block->hasChanged()) {
 		system("cls");
-		cout << _printBuf << '\n';
+		for (int i = 0; i < _height; ++i) {
+			cout << _printBuf[i] << '\n';
+		}
 
 		block->setChanged(false);
 	}
 }
 
-int Tetris::RemoveCompleted() {
-	int score;
+void Tetris::RemoveCompleted() {
+	int score = 0;
 	
 	for (int line = _height - 1; line > 1; --line) {
 		while (isCompleteLine(line)) {
@@ -124,7 +131,7 @@ int Tetris::RemoveCompleted() {
 			++score;
 		}
 	}
-	return score;
+	_score += score * 100;
 }
 
 bool Tetris::isCompleteLine(int line) {

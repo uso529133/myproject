@@ -13,7 +13,8 @@ public:
 	bool isDuplicateWith(Block* block);
 	void ApplyBlock(Block* block);
 	// remove completed lines
-	int RemoveCompleted();
+	void RemoveCompleted();
+	const int GetScore();
 	// print
 	void RefreshBuffer(Block* block);
 	void PrintBuffer(Block* block);
@@ -28,7 +29,8 @@ private:
 	vector<vector<int> > _map;
 	int _width, _height;
 	// variables for print
-	string _printBuf;
+	vector<string> _printBuf;
+	int _score;
 };
 
 #endif /* TETRIS_H */

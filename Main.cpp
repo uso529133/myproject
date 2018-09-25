@@ -31,7 +31,6 @@ int main() {
 					game->RefreshBuffer(block);
 					game->PrintBuffer(block);
 					
-					printf("Game Over!\n");
 					break;
 				}
 			}
@@ -62,6 +61,7 @@ int main() {
 			} else if (input == 32) {
 				while (!game->isDuplicateWith(block)) { block->MoveBy(1, 0); }
 				block->MoveBy(-1, 0);
+				if (game->isDuplicateWith(block)) { break; }
 				game->ApplyBlock(block);
 				block = factory.MakeBlock(width);
 			}
@@ -73,6 +73,8 @@ int main() {
 		
 		_sleep(50);
 	}
+	
+	printf("Game Ended with score %d!\n", game->GetScore());
 	
 	getchar();
 	
