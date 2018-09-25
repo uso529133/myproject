@@ -16,7 +16,7 @@ void Block::Rotate() {
 	
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
-			_array[i][j] = tempArray[4 - i][j];
+			_array[i][j] = tempArray[4 - j][i];
 		}
 	}
 }

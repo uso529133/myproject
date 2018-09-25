@@ -49,10 +49,12 @@ bool Tetris::isDuplicateWith(Block* block) {
 void Tetris::ApplyBlock(Block* block) {
 	const int posY = block->getLocation()->y;
 	const int posX = block->getLocation()->x;
+
+	const vector<vector<bool> >& array = block->getArray();
 	
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
-			if (posY + i >= 0 && posX + j >= 0 && posY + i < _height && posX + j < _width) { 
+			if (posY + i >= 0 && posX + j >= 0 && posY + i < _height && posX + j < _width && array[i][j]) { 
 				_map[posY + i][posX + j] = BlockType::Normal;
 			}
 		}

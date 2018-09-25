@@ -20,12 +20,12 @@ public:
 protected:
 	// block array
 	vector<vector<bool> > _array;
+	// rotate except Square Block
+	bool _canRotate;	
 	
 private:
 	// block position in TetrisMap
 	Point _position;
-	// rotate except Square Block
-	bool _canRotate;	
 };
 
 #endif /* BLOCK_H */
