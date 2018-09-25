@@ -4,7 +4,7 @@
 #include <windows.h>
 using namespace std;
 
-enum BlockType { Empty = 0, Wall = 1, Normal = 2 };
+enum BlockType { Empty = 0, v_Wall, h_Wall, Edge, Normal};
 
 Tetris::Tetris(int width, int height) 
  : _width(width), _height(height), _map(height, vector<int>(width, BlockType::Empty)) {
@@ -14,16 +14,18 @@ Tetris::Tetris(int width, int height)
 void Tetris::BuildWalls() {
  	for (int i = 0; i < _width; ++i) {
  		// top wall
- 		_map[0][i] = BlockType::Wall;
+ 		_map[0][i] = BlockType::v_Wall;
  		// bottom wall
- 		_map[_height - 1][i] = BlockType::Wall;
+ 		_map[_height - 1][i] = BlockType::v_Wall;
 	 }
 	for (int i = 0; i < _height; ++i) {
 		// left wall
- 		_map[i][0] = BlockType::Wall;
+ 		_map[i][0] = BlockType::h_Wall;
  		// right wall
- 		_map[i][_width - 1] = BlockType::Wall;
+ 		_map[i][_width - 1] = BlockType::h_Wall;
 	 }
+	 _map[0][0] = _map[0][_width - 1] = _map[_height - 1][0] 
+	 	= _map[_height - 1][_width - 1] = BlockType::Edge;
 }
 
 
@@ -34,8 +36,8 @@ bool Tetris::isDuplicateWith(Block block) {
 
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
-			if (posY + i >= 0 && posX + j >= 0 && posY + i < height; 
-			&& posX + j < width && _map[posY][posX] != BlockType::Empty ) { return true; }
+			if (posY + i >= 0 && posX + j >= 0 && posY + i < _height 
+			&& posX + j < _width && _map[posY + i][posX + j] != BlockType::Empty ) { return true; }
 		}
 	}
 	
@@ -63,14 +65,20 @@ void Tetris::RefreshBuffer(Block block) {
 	for (int i = 0; i < _height; ++i) {
 		for (int j = 0; j < _width; ++j) {
 			switch(tempMap[i][j]) {
-				case BlockType::Wall:
-					_printBuf += "||";
+				case BlockType::h_Wall:
+					_printBuf += "|";
+					break;
+				case BlockType::v_Wall:
+					_printBuf += "--";
+					break;
+				case BlockType::Edge:
+					_printBuf += "+";
 					break;
 				case BlockType::Normal:
-					_printBuf += "##";
+					_printBuf += "бс";
 					break;
-				default:
-					_printBuf += "..";
+				case BlockType::Empty:
+					_printBuf += "  ";
 					break;
 			}
 		}
