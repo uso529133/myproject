@@ -19,8 +19,8 @@ Block_J::Block_J(int y, int x) : Block(y, x) {
 
 Block_O::Block_O(int y, int x) : Block(y, x) {
 	_array.assign( { {0, 0, 0, 0, 0}, 
-					 {0, 0, 1, 1, 0}, 
-					 {0, 0, 1, 1, 0}, 
+					 {0, 1, 1, 0, 0}, 
+					 {0, 1, 1, 0, 0}, 
 					 {0, 0, 0, 0, 0}, 
 					 {0, 0, 0, 0, 0} } );
 	_canRotate = false;
