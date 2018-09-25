@@ -4,8 +4,8 @@
 CPP      = g++.exe --std=c++14
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = Tetris.o Block.o Main.o Blocks.o TetrisFactory.o
-LINKOBJ  = Tetris.o Block.o Main.o Blocks.o TetrisFactory.o
+OBJ      = Block.o Blocks.o Main.o Tetris.o TetrisFactory.o
+LINKOBJ  = Block.o Blocks.o Main.o Tetris.o TetrisFactory.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -24,17 +24,17 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-Tetris.o: Tetris.cpp
-	$(CPP) -c Tetris.cpp -o Tetris.o $(CXXFLAGS)
-
 Block.o: Block.cpp
 	$(CPP) -c Block.cpp -o Block.o $(CXXFLAGS)
+
+Blocks.o: Blocks.cpp
+	$(CPP) -c Blocks.cpp -o Blocks.o $(CXXFLAGS)
 
 Main.o: Main.cpp
 	$(CPP) -c Main.cpp -o Main.o $(CXXFLAGS)
 
-Blocks.o: Blocks.cpp
-	$(CPP) -c Blocks.cpp -o Blocks.o $(CXXFLAGS)
+Tetris.o: Tetris.cpp
+	$(CPP) -c Tetris.cpp -o Tetris.o $(CXXFLAGS)
 
 TetrisFactory.o: TetrisFactory.cpp
 	$(CPP) -c TetrisFactory.cpp -o TetrisFactory.o $(CXXFLAGS)
