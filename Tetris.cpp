@@ -62,7 +62,7 @@ void Tetris::ApplyBlock(Block* block) {
 }
 
 
-void Tetris::RefreshBuffer(Block* block) {
+void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 	if (!block->hasChanged()) return;
 	
 	for (int i = 0; i < _height; ++i) { _printBuf[i].clear(); }
@@ -73,6 +73,7 @@ void Tetris::RefreshBuffer(Block* block) {
 	const int& posX = block->getLocation().x;
 
 	const vector<vector<bool> >& array = block->getArray();
+	const vector<vector<bool> >& nextArray = nextBlock->getArray();
 
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
@@ -110,7 +111,7 @@ void Tetris::RefreshBuffer(Block* block) {
 	for (int i = 2; i < 7; ++i) {
 		_printBuf[i] += " |  ";
 		for (int j = 0; j < 5; ++j) {
-			switch(array[i - 2][j]) {
+			switch(nextArray[i - 2][j]) {
 				case BlockType::Normal:
 					_printBuf[i] += "бс";
 					break;
@@ -123,7 +124,7 @@ void Tetris::RefreshBuffer(Block* block) {
 	}
 
 	_printBuf[7] += " +--------------+";
-	_printBuf[_height - 2] += "  * Score: " + to_string(_score);
+	_printBuf[9] += "    * Score: " + to_string(_score);
 	
 }
 

@@ -17,6 +17,7 @@ int main() {
 	
 	Tetris* game = factory.MakeTetris(width, height);
 	Block* block = factory.MakeBlock(width);
+	Block* nextBlock = factory.MakeBlock(width);
 	
 	
 	while (true) {
@@ -25,10 +26,11 @@ int main() {
 			if (game->isDuplicateWith(block)) {
 				block->MoveBy(-1, 0);
 				game->ApplyBlock(block);
-				block = factory.MakeBlock(width);
+				block = nextBlock;
+				nextBlock = factory.MakeBlock(width);
 				
 				if (game->isDuplicateWith(block)) {
-					game->RefreshBuffer(block);
+					game->RefreshBuffer(block, nextBlock);
 					game->PrintBuffer(block);
 					
 					break;
@@ -63,12 +65,13 @@ int main() {
 				block->MoveBy(-1, 0);
 				if (game->isDuplicateWith(block)) { break; }
 				game->ApplyBlock(block);
-				block = factory.MakeBlock(width);
+				block = nextBlock;
+				nextBlock = factory.MakeBlock(width);
 			}
 		}
 		
 		game->RemoveCompleted();
-		game->RefreshBuffer(block);
+		game->RefreshBuffer(block, nextBlock);
 		game->PrintBuffer(block);
 		
 		_sleep(50);

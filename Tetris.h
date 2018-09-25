@@ -16,7 +16,7 @@ public:
 	void RemoveCompleted();
 	const int GetScore();
 	// print
-	void RefreshBuffer(Block* block);
+	void RefreshBuffer(Block* block, Block* nextBlock);
 	void PrintBuffer(Block* block);
 
 private:
