@@ -123,8 +123,8 @@ void Tetris::PrintBuffer(Block* block) {
 int Tetris::RemoveCompleted() {
 	int score;
 	
-	for (int line = _height - 1; line < 1; --line) {
-		while (isCompleteLine(line)) {
+	for (int line = _height - 1; line > 1; --line) {
+		if (isCompleteLine(line)) {
 			RemoveLine(line);
 			++score;
 		}
@@ -136,19 +136,24 @@ bool Tetris::isCompleteLine(int line) {
 	for (int i = 1; i < _width - 1; ++i) {
 		if (_map[line][i] != BlockType::Normal) { return false; }
 	}
-	printf("asdasd");
-	_sleep(1020);
 	return true;
 }
 
 void Tetris::RemoveLine(int line) {
-	for (int i = line + 1; i < 1; --line) {
+	
+	for (int i = 1; i < _width - 1; ++i) {
+			_map[line][i] = BlockType::Empty;
+	}
+	
+	for (int i = line; i > 1; --line) {
 		for (int j = 1; j < _width - 1; ++j) {
-			_map[i][j] = _map[i - 1][j];
+			_map[i][j] = _map[i + 1][j];
 		}
 	}
+/*
 	for (int i = 1; i < _width; ++i) {
 		_map[1][i] = BlockType::Empty;
 	}
+*/
 }
 
