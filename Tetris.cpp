@@ -31,8 +31,8 @@ void Tetris::BuildWalls() {
 
 
 bool Tetris::isDuplicateWith(Block* block) {
-	const int posY = block->getLocation()->y;
-	const int posX = block->getLocation()->x;
+	const int& posY = block->getLocation().y;
+	const int& posX = block->getLocation().x;
 
 	const vector<vector<bool> >& array = block->getArray();
 
@@ -47,8 +47,8 @@ bool Tetris::isDuplicateWith(Block* block) {
 }
 
 void Tetris::ApplyBlock(Block* block) {
-	const int posY = block->getLocation()->y;
-	const int posX = block->getLocation()->x;
+	const int& posY = block->getLocation().y;
+	const int& posX = block->getLocation().x;
 
 	const vector<vector<bool> >& array = block->getArray();
 	
@@ -67,8 +67,8 @@ void Tetris::RefreshBuffer(Block* block) {
 
 	auto tempMap(_map);
 
-	const int posY = block->getLocation()->y;
-	const int posX = block->getLocation()->x;
+	const int& posY = block->getLocation().y;
+	const int& posX = block->getLocation().x;
 
 	const vector<vector<bool> >& array = block->getArray();
 

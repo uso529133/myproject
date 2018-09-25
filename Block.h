@@ -14,7 +14,7 @@ public:
 	void MoveBy(int dx, int dy);
 	void Rotate();
 	// location getter
-	const Point* getLocation();
+	const Point& getLocation();
 	const vector<vector<bool> >& getArray();
 	
 protected:
