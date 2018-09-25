@@ -3,6 +3,7 @@
 
 Block::Block(int y, int x) : _position({x, y}), _canRotate(true), _array(5, vector<bool>(5, false)) {
 	_array.assign(5, vector<bool>(5, true));
+	_array[0][0] = false;
 }
 
 void Block::MoveBy(int dy, int dx) {

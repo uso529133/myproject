@@ -6,7 +6,7 @@ public:
 	Block_T(int y = 0, int x = 0);
 };
 
-Block_T::Block_T(int y, int x) {
+Block_T::Block_T(int y, int x) : Block(y, x) {
 	_array.assign( { {0, 0, 0, 0, 0}, 
 					 {0, 0, 0, 0, 0}, 
 					 {0, 0, 1, 0, 0}, 
