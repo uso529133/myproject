@@ -4,7 +4,7 @@
 #include <windows.h>
 using namespace std;
 
-enum BlockType { Empty = 0, v_Wall, h_Wall, Edge, Normal};
+enum BlockType { Empty = 0, Normal = 1, v_Wall = 2, h_Wall = 3, Edge = 4};
 
 Tetris::Tetris(int width, int height) 
  : _width(width), _height(height), _map(height, vector<int>(width, BlockType::Empty)), _printBuf(vector<string>(height)), _score(0) { BuildWalls(); }
@@ -103,7 +103,27 @@ void Tetris::RefreshBuffer(Block* block) {
 			}
 		}
 	}
-	_printBuf[_height / 2 - 1] += "  * Score: " + to_string(_score);
+	
+	_printBuf[0] += " +--------------+";
+	_printBuf[1] += " |   THE NEXT   |";
+	
+	for (int i = 2; i < 7; ++i) {
+		_printBuf[i] += " |  ";
+		for (int j = 0; j < 5; ++j) {
+			switch(array[i - 2][j]) {
+				case BlockType::Normal:
+					_printBuf[i] += "бс";
+					break;
+				case BlockType::Empty:
+					_printBuf[i] += "  ";
+					break;
+			}
+		}
+		_printBuf[i] += string(_width + 7 - _printBuf.size(), ' ') + "|";
+	}
+
+	_printBuf[7] += " +--------------+";
+	_printBuf[_height - 2] += "  * Score: " + to_string(_score);
 	
 }
 
