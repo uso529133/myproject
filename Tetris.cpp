@@ -129,10 +129,11 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 	_printBuf[10] += " |              |";
 	_printBuf[11] += " | " + string(12 - to_string(_score).size(), ' ') + to_string(_score) + " |";
 	_printBuf[12] += " +--------------+";
-	_printBuf[17] += "  CLI Tetris v0.1";
-	_printBuf[18] += "  url: https://git";
-	_printBuf[19] += "  hub.com/uso52913";
-	_printBuf[20] += "  3/simpleTetris";
+	_printBuf[15] += "  CLI Tetris 0.1";
+	_printBuf[17] += "  GITHUB: https:";
+	_printBuf[18] += "  //github.com/u";
+	_printBuf[19] += "  so529133/simpl";
+	_printBuf[20] += "  eTetris.git";
 	
 }
 
