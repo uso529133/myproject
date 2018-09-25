@@ -19,7 +19,7 @@ public:
 	const vector<vector<bool> >& getArray();
 	bool hasChanged();
 	// setter
-	void setChanged();	
+	void setChanged(bool ok);
 	// display configuration
 	void setFps(int fps);
 	

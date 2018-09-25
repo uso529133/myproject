@@ -16,7 +16,7 @@ public:
 	int RemoveCompleted();
 	// print
 	void RefreshBuffer(Block* block);
-	void PrintBuffer();
+	void PrintBuffer(Block* block);
 
 private:
 	// for RemoveCompleted()
@@ -29,7 +29,6 @@ private:
 	int _width, _height;
 	// variables for print
 	string _printBuf;
-	bool _hasChanged;
 };
 
 #endif /* TETRIS_H */

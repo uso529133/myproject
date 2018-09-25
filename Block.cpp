@@ -7,7 +7,7 @@ void Block::MoveBy(int dy, int dx) {
 	_position.x += dx;
 	_position.y += dy;
 	
-	setChanged();
+	setChanged(true);
 }
 
 void Block::Rotate() {
@@ -19,7 +19,7 @@ void Block::Rotate() {
 			_array[i][j] = tempArray[4 - j][i];
 		}
 	}
-	setChanged();
+	setChanged(true);
 }
 
 const Point& Block::getLocation() {
@@ -30,7 +30,7 @@ const vector<vector<bool> >& Block::getArray() {
 	return _array;
 }
 
-void Block::setChanged() { _hasChanged = true; }
+void Block::setChanged(bool ok) { _hasChanged = ok; }
 
 bool Block::hasChanged() { return _hasChanged; }
 
