@@ -33,7 +33,7 @@ int main() {
 		}
 		
 		if (kbhit()) {
-			int input = getch();
+			input = getch();
 			if (input == 224) {
 				switch (getch()) {
 					case Key::Up:
@@ -52,6 +52,11 @@ int main() {
 						if (game->isDuplicateWith(block)) { block->MoveBy(0, -1); }
 						break;
 				}
+			} else if (input == 32) {
+				while (!game->isDuplicateWith(block)) {
+					block->MoveBy(1, 0);
+				}
+				block->MoveBy(-1, 0);
 			}
 		}
 		
@@ -59,7 +64,7 @@ int main() {
 		game->RefreshBuffer(block);
 		game->PrintBuffer();
 		
-		_sleep(100);
+		_sleep(150);
 	}
 	
 	getchar();

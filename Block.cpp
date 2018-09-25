@@ -9,6 +9,8 @@ void Block::MoveBy(int dy, int dx) {
 }
 
 void Block::Rotate() {
+	if (!_canRotate) return;
+	
 	auto tempArray(_array);
 	
 	for (int i = 0; i < 5; ++i) {

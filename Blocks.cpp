@@ -53,7 +53,7 @@ Block_Z::Block_Z(int y, int x) : Block(y, x) {
 Block_I::Block_I(int y, int x) : Block(y, x) {
 	_array.assign( { {0, 0, 0, 0, 0}, 
 					 {0, 0, 0, 0, 0}, 
-					 {1, 1, 1, 1, 1}, 
+					 {0, 1, 1, 1, 1}, 
 					 {0, 0, 0, 0, 0}, 
 					 {0, 0, 0, 0, 0} } );
 };
