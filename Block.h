@@ -15,6 +15,7 @@ public:
 	void Rotate();
 	// location getter
 	const Point* getLocation();
+	const vector<vector<bool> >& getArray();
 	
 protected:
 	// block array

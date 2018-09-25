@@ -24,3 +24,7 @@ void Block::Rotate() {
 const Point* Block::getLocation() {
 	return &_position;
 }
+
+const vector<vector<bool> >& Block::getArray() {
+	return _array;
+}
