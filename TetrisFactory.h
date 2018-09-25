@@ -12,7 +12,7 @@ public:
 };
 
 Block* TetrisFactory::MakeBlock(int width) {
-	return new Block(0, width / 2 - 2);
+	return new Block(1, width / 2 - 2);
 }
 
 Tetris* TetrisFactory::MakeTetris(int width, int height) {

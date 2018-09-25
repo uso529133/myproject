@@ -22,6 +22,7 @@ int main() {
 			block->MoveBy(-1, 0);
 			game->ApplyBlock(block);
 			block = factory.MakeBlock(width);
+			
 			if (game->isDuplicateWith(block)) {
 				printf("Game Over!\n");
 				break;
