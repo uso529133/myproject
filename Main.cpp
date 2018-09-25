@@ -64,7 +64,7 @@ int main() {
 		game->RefreshBuffer(block);
 		game->PrintBuffer();
 		
-		_sleep(150);
+		_sleep(50);
 	}
 	
 	getchar();

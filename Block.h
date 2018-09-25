@@ -17,16 +17,20 @@ public:
 	// getter
 	const Point& getLocation();
 	const vector<vector<bool> >& getArray();
+	// display configuration
+	void setFps(int fps);
 	
 protected:
 	// block array
 	vector<vector<bool> > _array;
 	// rotate except ...
-	bool _canRotate;	
-	
+	bool _canRotate;
+
 private:
 	// Block position in TetrisMap
 	Point _position;
+	int _freq;
+	int _lastFreq;
 };
 
 #endif /* BLOCK_H */
