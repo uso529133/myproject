@@ -1,8 +1,8 @@
 
 #include "Block.h"
 
-Block::Block(int y, int x) : _position({x, y}), _canRotate(true), _array(y, vector<bool>(x, false)) {
-	_array.assign(y, vector<bool>(x, true));
+Block::Block(int y, int x) : _position({x, y}), _canRotate(true), _array(5, vector<bool>(5, false)) {
+	_array.assign(5, vector<bool>(5, true));
 }
 
 void Block::MoveBy(int dy, int dx) {

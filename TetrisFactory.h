@@ -3,7 +3,7 @@
 #define TETRISFACTORY_H
 
 #include "Tetris.h"
-#include "Block.h"
+#include "Blocks.h"
 
 class TetrisFactory {
 public:
@@ -12,7 +12,7 @@ public:
 };
 
 Block* TetrisFactory::MakeBlock(int width) {
-	return new Block(1, width / 2 - 2);
+	return new Block_T(1, width / 2 - 2);
 }
 
 Tetris* TetrisFactory::MakeTetris(int width, int height) {

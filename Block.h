@@ -16,9 +16,11 @@ public:
 	// location getter
 	const Point* getLocation();
 	
-private:
+protected:
 	// block array
 	vector<vector<bool> > _array;
+	
+private:
 	// block position in TetrisMap
 	Point _position;
 	// rotate except Square Block
