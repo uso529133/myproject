@@ -21,8 +21,6 @@ public:
 	bool hasChanged();
 	// setter
 	void setChanged(bool ok);
-	// display configuration
-	void setFps(int fps);
 	
 protected:
 	// block array

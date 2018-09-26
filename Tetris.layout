@@ -4,9 +4,9 @@ CursorRow=12
 TopLine=1
 LeftChar=1
 [Editor_6]
-CursorCol=3
-CursorRow=12
-TopLine=1
+CursorCol=1
+CursorRow=11
+TopLine=15
 LeftChar=1
 [Editor_4]
 CursorCol=3
@@ -30,3 +30,13 @@ TopLine=1
 LeftChar=1
 [Editors]
 Order=
+[Editor_2]
+CursorCol=10
+CursorRow=9
+TopLine=1
+LeftChar=1
+[Editor_1]
+CursorCol=12
+CursorRow=9
+TopLine=1
+LeftChar=1
