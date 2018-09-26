@@ -13,7 +13,7 @@ void Block::MoveBy(int dy, int dx) {
 
 void Block::Rotate() {
 	if (!_canRotate) return;
-	auto tempArray(_array);
+	auto tempArray(std::move(_array));
 	
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
@@ -25,7 +25,7 @@ void Block::Rotate() {
 
 void Block::UnRotate() {
 	if (!_canRotate) return;
-	auto tempArray(_array);
+	auto tempArray(std::move(_array));
 	
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {

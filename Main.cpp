@@ -9,7 +9,6 @@ const int height = 22;
 enum Key { Up = 72, Down = 80, Left = 75, Right = 77 };
 
 int main() {
-
 	TetrisFactory   factory;
 
 	int             input;

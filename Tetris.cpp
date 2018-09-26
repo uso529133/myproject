@@ -23,21 +23,21 @@ void Tetris::BuildWalls() {
  		_map[i][_width - 1] = BlockType::h_Wall;
 	 }
 	 _map[0][0] = _map[0][_width - 1] = _map[_height - 1][0] 
-	 	= _map[_height - 1][_width - 1] = BlockType::Edge;
+	 			= _map[_height - 1][_width - 1] = BlockType::Edge;
 }
 
 
 
 bool Tetris::isDuplicateWith(Block* block) {
-	const int& posY = block->getLocation().y;
-	const int& posX = block->getLocation().x;
+	int posY = block->getLocation().y;
+	int posX = block->getLocation().x;
 
 	const vector<vector<bool> >& array = block->getArray();
 
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
-			if (posY + i >= 0 && posX + j >= 0 && posY + i < _height && posX + j < _width 
-			&& _map[posY + i][posX + j] != BlockType::Empty && array[i][j] ) { return true; }
+			if ((posY + i >= 0) && (posY + i < _height) && (posX + j >= 0) && (posX + j < _width) && array[i][j]
+			&& _map[posY + i][posX + j] != BlockType::Empty ) { return true; }
 		}
 	}
 	
@@ -45,14 +45,14 @@ bool Tetris::isDuplicateWith(Block* block) {
 }
 
 void Tetris::ApplyBlock(Block* block) {
-	const int& posY = block->getLocation().y;
-	const int& posX = block->getLocation().x;
+	int posY = block->getLocation().y;
+	int posX = block->getLocation().x;
 
 	const vector<vector<bool> >& array = block->getArray();
 	
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
-			if (posY + i >= 0 && posX + j >= 0 && posY + i < _height && posX + j < _width && array[i][j]) { 
+			if ((posY + i >= 0) && (posY + i < _height) && (posX + j >= 0) && (posX + j < _width) && array[i][j]) { 
 				_map[posY + i][posX + j] = BlockType::Normal;
 			}
 		}
@@ -143,10 +143,7 @@ const int Tetris::GetScore() {
 void Tetris::PrintBuffer(Block* block) {
 	if (block->hasChanged()) {
 		system("cls");
-		for (int i = 0; i < _height-2; ++i) {
-			cout << _printBuf[i] << '\n';
-		}
-		for (int i = _height-2; i < _height; ++i) {
+		for (int i = 0; i < _height; ++i) {
 			cout << _printBuf[i] << '\n';
 		}
 		

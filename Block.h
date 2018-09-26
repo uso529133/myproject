@@ -4,7 +4,6 @@
 
 #include "Point.h"
 #include <vector>
-
 using std::vector;
 
 class Block {
@@ -29,7 +28,7 @@ protected:
 	bool _canRotate;
 
 private:
-	// Block position in TetrisMap
+	// info to provide Tetris.Class
 	Point _position;
 	bool _hasChanged;
 };
