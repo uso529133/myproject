@@ -141,7 +141,7 @@ const int Tetris::GetScore() {
 }
 
 void Tetris::PrintBuffer(Block* block) {
-	if (block->hasChanged()) {
+	if (block->hasChanged()) {	
 		system("cls");
 		for (int i = 0; i < _height; ++i) {
 			cout << _printBuf[i] << '\n';
@@ -154,18 +154,18 @@ void Tetris::PrintBuffer(Block* block) {
 void Tetris::RemoveCompleted() {
 	int score = 0;
 	
-	for (int line = _height - 1; line > 1; --line) {
+	for (int line = _height - 2; line > 1; --line) {
 		while (isCompleteLine(line)) {
 			RemoveLine(line);
 			++score;
 		}
-	}
+	}	
 	_score += score * 100;
 }
 
 bool Tetris::isCompleteLine(int line) {
 	for (int i = 1; i < _width - 1; ++i) {
-		if (_map[line][i] != BlockType::Normal) { return false; }
+		if (_map[line][i] == BlockType::Empty) { return false; }
 	}
 	return true;
 }
