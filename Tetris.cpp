@@ -137,6 +137,7 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 	_printBuf[10] += " 早              早";
 	_printBuf[11] += " 早 " + string(12 - to_string(_score).size(), ' ') + to_string(_score) + " 早";
 	_printBuf[12] += " 曲收收收收收收收旭";
+	_printBuf[13] += "     p : pause";
 	_printBuf[15] += "  CLI Tetris 0.1";
 	_printBuf[17] += "  GITHUB: https:";
 	_printBuf[18] += "  //github.com/u";
@@ -198,5 +199,19 @@ void Tetris::PauseGame(Block* block) {
 
 	block->setChanged(true);
 	PrintBuffer(block);	
+}
+
+void Tetris::ResumeGame(Block* block, Block* nextBlock) {
+	block->setChanged(true);
+	RefreshBuffer(block, nextBlock);
+	
+	for (int i = 3; i >= 1; --i) {	
+		_printBuf[_height / 2].replace(_width / 2 + 15, 1, to_string(i));
+		
+		block->setChanged(true);
+		PrintBuffer(block);	
+		
+		_sleep(1000);
+	}	
 }
 

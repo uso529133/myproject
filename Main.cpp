@@ -72,11 +72,13 @@ int main() {
 			} else if (input == 'p' || input == 'P') {
 				game->PauseGame(block);
 				while (true) {
-					if (!kbhit())
+					if (kbhit()) {
 						input = getch();
 						if (input == 'r' || input =='R') {
+							game->ResumeGame(block, nextBlock);
 							break;
 						}
+					}
 				}
 			}
 		}

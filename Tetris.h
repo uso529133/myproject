@@ -20,6 +20,7 @@ public:
 	void PrintBuffer(Block* block);
 	// pause game
 	void PauseGame(Block* block);
+	void ResumeGame(Block* block, Block* nextBlock);
 
 private: 
 	// for RemoveCompleted()
