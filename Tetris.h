@@ -19,9 +19,9 @@ public:
 	void RefreshBuffer(Block* block, Block* nextBlock);
 	void PrintBuffer(Block* block);
 
-private:
+private: 
 	// for RemoveCompleted()
-	bool isCompleteLine(int line);
+	bool isCompleteLine(int line) const;
 	void RemoveLine(int line);
 	// for init
 	void BuildWalls();

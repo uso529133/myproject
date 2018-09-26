@@ -4,7 +4,7 @@
 #include <windows.h>
 using namespace std;
 
-enum BlockType { Empty = 0, Normal = 1, v_Wall = 2, h_Wall = 3, Edge = 4};
+enum BlockType { Empty, Normal, V_Wall, H_Wall, UL_Edge, UR_Edge, BL_Edge, BR_Edge};
 
 Tetris::Tetris(int width, int height) 
  : _width(width), _height(height), _map(height, vector<int>(width, BlockType::Empty)), _printBuf(vector<string>(height)), _score(0) { BuildWalls(); system("Color 3B"); }
@@ -12,18 +12,20 @@ Tetris::Tetris(int width, int height)
 void Tetris::BuildWalls() {
  	for (int i = 0; i < _width; ++i) {
  		// top wall
- 		_map[0][i] = BlockType::v_Wall;
+ 		_map[0][i] = BlockType::V_Wall;
  		// bottom wall
- 		_map[_height - 1][i] = BlockType::v_Wall;
+ 		_map[_height - 1][i] = BlockType::V_Wall;
 	 }
 	for (int i = 0; i < _height; ++i) {
 		// left wall
- 		_map[i][0] = BlockType::h_Wall;
+ 		_map[i][0] = BlockType::H_Wall;
  		// right wall
- 		_map[i][_width - 1] = BlockType::h_Wall;
+ 		_map[i][_width - 1] = BlockType::H_Wall;
 	 }
-	 _map[0][0] = _map[0][_width - 1] = _map[_height - 1][0] 
-	 			= _map[_height - 1][_width - 1] = BlockType::Edge;
+	 _map[0][0] = BlockType::UL_Edge;
+	 _map[0][_width - 1] = BlockType::UR_Edge;
+	 _map[_height - 1][0] = BlockType::BL_Edge;
+	 _map[_height - 1][_width - 1] = BlockType::BR_Edge;
 }
 
 
@@ -86,14 +88,23 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 	for (int i = 0; i < _height; ++i) {
 		for (int j = 0; j < _width; ++j) {
 			switch(tempMap[i][j]) {
-				case BlockType::h_Wall:
-					_printBuf[i] += "|";
+				case BlockType::H_Wall:
+					_printBuf[i] += "早";
 					break;
-				case BlockType::v_Wall:
-					_printBuf[i] += "--";
+				case BlockType::V_Wall:
+					_printBuf[i] += "收";
 					break;
-				case BlockType::Edge:
-					_printBuf[i] += "+";
+				case BlockType::UL_Edge:
+					_printBuf[i] += "旨";
+					break;
+				case BlockType::UR_Edge:
+					_printBuf[i] += "旬";
+					break;
+				case BlockType::BL_Edge:
+					_printBuf[i] += "曲";
+					break;
+				case BlockType::BR_Edge:
+					_printBuf[i] += "旭";
 					break;
 				case BlockType::Normal:
 					_printBuf[i] += "﹥";
@@ -104,12 +115,12 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 			}
 		}
 	}
-	
-	_printBuf[0] += " +--------------+";
-	_printBuf[1] += " |   THE NEXT   |";
+	 
+	_printBuf[0] += " 旨收收收收收收收旬";
+	_printBuf[1] += " 早   THE NEXT   早";
 	
 	for (int i = 2; i < 7; ++i) {
-		_printBuf[i] += " |  ";
+		_printBuf[i] += " 早  ";
 		for (int j = 0; j < 5; ++j) {
 			switch(nextArray[i - 2][j]) {
 				case BlockType::Normal:
@@ -120,14 +131,14 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 					break;
 			}
 		}
-		_printBuf[i] += string(14 - (_printBuf[i].size() - _width * 2), ' ') + "|";
+		_printBuf[i] += string(17 - (_printBuf[i].size() - _width * 2), ' ') + "早";
 	}
-	_printBuf[7] += " +--------------+";
-	_printBuf[8] += " +--------------+";
-	_printBuf[9] += " |     SCORE    |";
-	_printBuf[10] += " |              |";
-	_printBuf[11] += " | " + string(12 - to_string(_score).size(), ' ') + to_string(_score) + " |";
-	_printBuf[12] += " +--------------+";
+	_printBuf[7] += " 曲收收收收收收收旭";
+	_printBuf[8] += " 旨收收收收收收收旬";
+	_printBuf[9] += " 早     SCORE    早";
+	_printBuf[10] += " 早              早";
+	_printBuf[11] += " 早 " + string(12 - to_string(_score).size(), ' ') + to_string(_score) + " 早";
+	_printBuf[12] += " 曲收收收收收收收旭";
 	_printBuf[15] += "  CLI Tetris 0.1";
 	_printBuf[17] += "  GITHUB: https:";
 	_printBuf[18] += "  //github.com/u";
@@ -141,7 +152,7 @@ const int Tetris::GetScore() {
 }
 
 void Tetris::PrintBuffer(Block* block) {
-	if (block->hasChanged()) {	
+	if (block->hasChanged()) {
 		system("cls");
 		for (int i = 0; i < _height; ++i) {
 			cout << _printBuf[i] << '\n';
@@ -159,11 +170,11 @@ void Tetris::RemoveCompleted() {
 			RemoveLine(line);
 			++score;
 		}
-	}	
+	}
 	_score += score * 100;
 }
 
-bool Tetris::isCompleteLine(int line) {
+bool Tetris::isCompleteLine(int line) const {
 	for (int i = 1; i < _width - 1; ++i) {
 		if (_map[line][i] == BlockType::Empty) { return false; }
 	}
@@ -172,10 +183,9 @@ bool Tetris::isCompleteLine(int line) {
 
 void Tetris::RemoveLine(int line) {
 	for (int i = line; i > 1; --i) {
-		for (int j = 1; j < _width - 1; ++j) {
-			_map[i][j] = _map[i - 1][j];
-		}
+		memcpy(&_map[i], &_map[i - 1], sizeof(_map[i]));
 	}
+	
 	for (int i = 1; i < _width - 1; ++i) {
 		_map[1][i] = BlockType::Empty;
 	}
