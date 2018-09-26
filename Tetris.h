@@ -18,6 +18,8 @@ public:
 	// print
 	void RefreshBuffer(Block* block, Block* nextBlock);
 	void PrintBuffer(Block* block);
+	// pause game
+	void PauseGame(Block* block);
 
 private: 
 	// for RemoveCompleted()

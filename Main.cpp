@@ -28,6 +28,7 @@ int main() {
 				game->ApplyBlock(block);
 				block = nextBlock;
 				nextBlock = factory.MakeBlock(width);
+				game->RemoveCompleted();
 				
 				if (game->isDuplicateWith(block)) {
 					game->RefreshBuffer(block, nextBlock);
@@ -67,10 +68,19 @@ int main() {
 				game->ApplyBlock(block);
 				block = nextBlock;
 				nextBlock = factory.MakeBlock(width);
+				game->RemoveCompleted();
+			} else if (input == 'p' || input == 'P') {
+				game->PauseGame(block);
+				while (true) {
+					if (!kbhit())
+						input = getch();
+						if (input == 'r' || input =='R') {
+							break;
+						}
+				}
 			}
 		}
 		
-		game->RemoveCompleted(); //to move
 		game->RefreshBuffer(block, nextBlock);
 		game->PrintBuffer(block);
 		

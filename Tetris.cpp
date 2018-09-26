@@ -28,8 +28,6 @@ void Tetris::BuildWalls() {
 	 _map[_height - 1][_width - 1] = BlockType::BR_Edge;
 }
 
-
-
 bool Tetris::isDuplicateWith(Block* block) {
 	int posY = block->getLocation().y;
 	int posX = block->getLocation().x;
@@ -189,5 +187,16 @@ void Tetris::RemoveLine(int line) {
 	for (int i = 1; i < _width - 1; ++i) {
 		_map[1][i] = BlockType::Empty;
 	}
+}
+
+string pauseStr = "* PAUSED *";
+string resumeStr = "PRESS 'R' TO RESUME";
+
+void Tetris::PauseGame(Block* block) {
+	_printBuf[_height / 2 - 1].replace(_width / 2 + 15 - pauseStr.size() / 2, pauseStr.size(), pauseStr);
+	_printBuf[_height / 2].replace(_width / 2 + 15 -  resumeStr.size() / 2, resumeStr.size(), resumeStr);
+
+	block->setChanged(true);
+	PrintBuffer(block);	
 }
 
