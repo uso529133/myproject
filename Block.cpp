@@ -1,7 +1,8 @@
 
 #include "Block.h"
 
-Block::Block(int y, int x) : _position({x, y}), _canRotate(true), _array(5, vector<bool>(5, true)), _hasChanged(true) {}
+Block::Block(int y, int x)
+ : _position({x, y}), _canRotate(true), _array(5, vector<bool>(5, true)), _hasChanged(true) {}
 
 void Block::MoveBy(int dy, int dx) {
 	_position.x += dx;
@@ -34,13 +35,9 @@ void Block::UnRotate() {
 	setChanged(true);
 }
 
-const Point& Block::getLocation() {
-	return _position;
-}
+const Point& Block::getLocation() { return _position; }
 
-const vector<vector<bool> >& Block::getArray() {
-	return _array;
-}
+const vector<vector<bool> >& Block::getArray() { return _array; }
 
 void Block::setChanged(bool ok) { _hasChanged = ok; }
 
