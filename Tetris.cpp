@@ -4,8 +4,6 @@
 #include <windows.h>
 using namespace std;
 
-enum BlockType { Empty, Normal, V_Wall, H_Wall, UL_Edge, UR_Edge, BL_Edge, BR_Edge};
-
 Tetris::Tetris(int width, int height) 
  : _width(width), _height(height), _map(height, vector<int>(width, BlockType::Empty)), _printBuf(vector<string>(height)), _score(0) { 
  	BuildWalls(); 
@@ -35,7 +33,7 @@ bool Tetris::isDuplicateWith(Block* block) {
 	int posY = block->getLocation().y;
 	int posX = block->getLocation().x;
 
-	const vector<vector<bool> >& array = block->getArray();
+	const auto& array = block->getArray();
 
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
@@ -51,7 +49,7 @@ void Tetris::ApplyBlock(Block* block) {
 	int posY = block->getLocation().y;
 	int posX = block->getLocation().x;
 
-	const vector<vector<bool> >& array = block->getArray();
+	const auto& array = block->getArray();
 	
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
@@ -75,8 +73,8 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 	const int& posY = block->getLocation().y;
 	const int& posX = block->getLocation().x;
 
-	const vector<vector<bool> >& array = block->getArray();
-	const vector<vector<bool> >& nextArray = nextBlock->getArray();
+	const auto& array = block->getArray();
+	const auto& nextArray = nextBlock->getArray();
 
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
@@ -190,12 +188,6 @@ void Tetris::RemoveLine(int line) {
 		}
 	}
 	
-	/* error version
-	for (int i = line; i > 1; --i) {
-		memcpy(&_map[i], &_map[i - 1], sizeof(_map[i]));
-	}
-	*/
-	
 	for (int i = 1; i < _width - 1; ++i) {
 		_map[1][i] = BlockType::Empty;
 	}
@@ -205,8 +197,8 @@ string pauseStr = "* PAUSED *";
 string resumeStr = "PRESS 'R' TO RESUME";
 
 void Tetris::PauseGame(Block* block) {
-	_printBuf[_height / 2 - 1].replace(_width / 2 + 15 - pauseStr.size() / 2, pauseStr.size(), pauseStr);
-	_printBuf[_height / 2].replace(_width / 2 + 15 -  resumeStr.size() / 2, resumeStr.size(), resumeStr);
+	_printBuf[_height / 2 - 1].replace(_width - pauseStr.size() / 2, pauseStr.size(), pauseStr);
+	_printBuf[_height / 2].replace(_width -  resumeStr.size() / 2, resumeStr.size(), resumeStr);
 
 	block->setChanged(true);
 	PrintBuffer(block);	
@@ -217,7 +209,7 @@ void Tetris::ResumeGame(Block* block, Block* nextBlock) {
 	RefreshBuffer(block, nextBlock);
 	
 	for (int i = 3; i >= 1; --i) {	
-		_printBuf[_height / 2].replace(_width / 2 + 15, 1, to_string(i));
+		_printBuf[_height / 2].replace(_width, 1, to_string(i));
 		
 		block->setChanged(true);
 		PrintBuffer(block);	

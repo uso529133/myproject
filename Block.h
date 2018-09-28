@@ -6,6 +6,8 @@
 #include <vector>
 using std::vector;
 
+enum BlockType { Empty, Normal, V_Wall, H_Wall, UL_Edge, UR_Edge, BL_Edge, BR_Edge};
+
 class Block {
 public:
 	// constructor
@@ -16,14 +18,14 @@ public:
 	void UnRotate();
 	// getter
 	const Point& getLocation();
-	const vector<vector<bool> >& getArray();
+	const vector<vector<int> >& getArray();
 	bool hasChanged();
 	// setter
 	void setChanged(bool ok);
 	
 protected:
 	// block array
-	vector<vector<bool> > _array;
+	vector<vector<int> > _array;
 	// rotate except ...
 	bool _canRotate;
 
