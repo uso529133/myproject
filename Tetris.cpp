@@ -5,7 +5,7 @@
 using namespace std;
 
 Tetris::Tetris(int width, int height) 
- : _width(width), _height(height), _map(height, vector<int>(width, BlockType::Empty)), _printBuf(vector<string>(height)), _score(0) { 
+ : _width(width), _height(height), _map(height, vector<BlockType>(width, BlockType::Empty)), _printBuf(vector<string>(height)), _score(0) { 
  	BuildWalls(); 
 	// system("Color 3B"); 
  }
@@ -37,7 +37,7 @@ bool Tetris::isDuplicateWith(Block* block) {
 
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
-			if ((posY + i >= 0) && (posY + i < _height) && (posX + j >= 0) && (posX + j < _width) && array[i][j]
+			if ((posY + i >= 0) && (posY + i < _height) && (posX + j >= 0) && (posX + j < _width) && array[i][j] != BlockType::Empty
 			&& _map[posY + i][posX + j] != BlockType::Empty ) { return true; }
 		}
 	}
@@ -53,8 +53,8 @@ void Tetris::ApplyBlock(Block* block) {
 	
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
-			if ((posY + i >= 0) && (posY + i < _height) && (posX + j >= 0) && (posX + j < _width) && array[i][j]) { 
-				_map[posY + i][posX + j] = BlockType::Normal;
+			if ((posY + i >= 0) && (posY + i < _height) && (posX + j >= 0) && (posX + j < _width) && array[i][j] != BlockType::Empty) { 
+				_map[posY + i][posX + j] = array[i][j];
 			}
 		}
 	}
@@ -70,8 +70,8 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 
 	auto tempMap(_map);
 
-	const int& posY = block->getLocation().y;
-	const int& posX = block->getLocation().x;
+	int posY = block->getLocation().y;
+	int posX = block->getLocation().x;
 
 	const auto& array = block->getArray();
 	const auto& nextArray = nextBlock->getArray();
@@ -79,8 +79,8 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
 			if (posY + i > 0 && posX + j > 0 && posY + i < _height - 1 
-				&& posX + j < _width - 1 && array[i][j])
-					tempMap[posY + i][posX + j] = BlockType::Normal;
+				&& posX + j < _width - 1 && array[i][j] != BlockType::Empty)
+					tempMap[posY + i][posX + j] = array[i][j];
 		}
 	}
 
@@ -105,6 +105,15 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 				case BlockType::BR_Edge:
 					_printBuf[i] += "¦°";
 					break;
+				case BlockType::Special1:
+					_printBuf[i] += "¡Ú"; 
+					break;
+				case BlockType::Special2:
+					_printBuf[i] += "¡ß"; 
+					break;
+				case BlockType::Special3:
+					_printBuf[i] += "¡Ü"; 
+					break;
 				case BlockType::Normal:
 					_printBuf[i] += "¡á"; 
 					break;
@@ -122,8 +131,35 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 		_printBuf[i] += " ¦­  ";
 		for (int j = 0; j < 5; ++j) {
 			switch(nextArray[i - 2][j]) {
+				case BlockType::H_Wall:
+					_printBuf[i] += "¦­";
+					break;
+				case BlockType::V_Wall:
+					_printBuf[i] += "¦¬";
+					break;
+				case BlockType::UL_Edge:
+					_printBuf[i] += "¦®";
+					break;
+				case BlockType::UR_Edge:
+					_printBuf[i] += "¦¯";
+					break;
+				case BlockType::BL_Edge:
+					_printBuf[i] += "¦±";
+					break;
+				case BlockType::BR_Edge:
+					_printBuf[i] += "¦°";
+					break;
+				case BlockType::Special1:
+					_printBuf[i] += "¡Ú"; 
+					break;
+				case BlockType::Special2:
+					_printBuf[i] += "¡ß"; 
+					break;
+				case BlockType::Special3:
+					_printBuf[i] += "¡Ü"; 
+					break;
 				case BlockType::Normal:
-					_printBuf[i] += "¡á";
+					_printBuf[i] += "¡á"; 
 					break;
 				case BlockType::Empty:
 					_printBuf[i] += "  ";

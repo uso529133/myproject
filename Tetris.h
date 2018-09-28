@@ -29,7 +29,7 @@ private:
 	// for init
 	void BuildWalls();
 	// map infos
-	vector<vector<int> > _map;
+	vector<vector<BlockType> > _map;
 	int _width, _height;
 	// variables for print
 	vector<string> _printBuf;

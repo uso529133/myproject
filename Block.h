@@ -6,7 +6,7 @@
 #include <vector>
 using std::vector;
 
-enum BlockType { Empty, Normal, V_Wall, H_Wall, UL_Edge, UR_Edge, BL_Edge, BR_Edge};
+enum class BlockType { Empty, Normal, Special1, Special2, Special3, V_Wall, H_Wall, UL_Edge, UR_Edge, BL_Edge, BR_Edge};
 
 class Block {
 public:
@@ -16,16 +16,17 @@ public:
 	void MoveBy(int dx, int dy);
 	void Rotate();
 	void UnRotate();
+	void Randomize();
 	// getter
 	const Point& getLocation();
-	const vector<vector<int> >& getArray();
+	const vector<vector<BlockType> >& getArray();
 	bool hasChanged();
 	// setter
 	void setChanged(bool ok);
 	
 protected:
 	// block array
-	vector<vector<int> > _array;
+	vector<vector<BlockType> > _array;
 	// rotate except ...
 	bool _canRotate;
 
