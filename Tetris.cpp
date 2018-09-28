@@ -7,7 +7,10 @@ using namespace std;
 enum BlockType { Empty, Normal, V_Wall, H_Wall, UL_Edge, UR_Edge, BL_Edge, BR_Edge};
 
 Tetris::Tetris(int width, int height) 
- : _width(width), _height(height), _map(height, vector<int>(width, BlockType::Empty)), _printBuf(vector<string>(height)), _score(0) { BuildWalls(); system("Color 3B"); }
+ : _width(width), _height(height), _map(height, vector<int>(width, BlockType::Empty)), _printBuf(vector<string>(height)), _score(0) { 
+ 	BuildWalls(); 
+	// system("Color 3B"); 
+ }
 
 void Tetris::BuildWalls() {
  	for (int i = 0; i < _width; ++i) {
@@ -105,7 +108,7 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 					_printBuf[i] += "ж░";
 					break;
 				case BlockType::Normal:
-					_printBuf[i] += "бс";
+					_printBuf[i] += "бс"; 
 					break;
 				case BlockType::Empty:
 					_printBuf[i] += "  ";
@@ -180,9 +183,18 @@ bool Tetris::isCompleteLine(int line) const {
 }
 
 void Tetris::RemoveLine(int line) {
+	
+	for (int i = line; i > 1; --i) {
+		for (int j = 1; j < _width - 1; ++j) {
+			_map[i][j] = _map[i - 1][j];
+		}
+	}
+	
+	/* error version
 	for (int i = line; i > 1; --i) {
 		memcpy(&_map[i], &_map[i - 1], sizeof(_map[i]));
 	}
+	*/
 	
 	for (int i = 1; i < _width - 1; ++i) {
 		_map[1][i] = BlockType::Empty;

@@ -3,7 +3,7 @@
 #include "TetrisFactory.h"
 #include <conio.h>
 
-const int width = 28;
+const int width = 15;
 const int height = 22;
 
 enum Key { Up = 72, Down = 80, Left = 75, Right = 77 };
