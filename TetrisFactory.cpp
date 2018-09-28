@@ -2,6 +2,8 @@
 #include "TetrisFactory.h"
 #include <time.h>
 
+void InitBlock(Block* block);
+
 TetrisFactory::TetrisFactory() {
 	srand(time(NULL));
 }
@@ -34,7 +36,37 @@ Block* TetrisFactory::MakeBlock(int width) {
 			break;
 	}
 	
+	InitBlock(block);
+	
 	return block;
+}
+
+template <typename T>
+class TD;
+
+void InitBlock(Block* block) {
+	auto& array = block->getArray();
+	
+	for (auto& line : array) {
+		for (auto& p : line) {
+			if (p == BlockType::Normal) {
+				switch(rand() % 4) {
+					case 0:
+						break;
+					case 1:
+						p = BlockType::Special_A;
+						break;
+					case 2:
+						p = BlockType::Special_B;
+						break;
+					case 3:
+						p = BlockType::Special_C;
+						break;
+				}
+			}
+		}
+	}
+	
 }
 
 Tetris* TetrisFactory::MakeTetris(int width, int height) {
