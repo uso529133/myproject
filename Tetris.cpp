@@ -5,31 +5,29 @@
 using namespace std;
 
 Tetris::Tetris(int width, int height) 
- : _width(width), _height(height), _map(height, vector<BlockType>(width, BlockType::Empty)), _printBuf(vector<string>(height)), _score(0) { 
- 	BuildWalls(); 
-	// system("Color 3B"); 
- }
+ : _width(width), _height(height), _map(height, vector<BlockType>(width, BlockType::Empty)), _printBuf(vector<string>(height)), _score(0) {}
 
-void Tetris::BuildWalls() {
- 	for (int i = 0; i < _width; ++i) {
- 		// top wall
- 		_map[0][i] = BlockType::V_Wall;
- 		// bottom wall
- 		_map[_height - 1][i] = BlockType::V_Wall;
-	 }
-	for (int i = 0; i < _height; ++i) {
-		// left wall
- 		_map[i][0] = BlockType::H_Wall;
- 		// right wall
- 		_map[i][_width - 1] = BlockType::H_Wall;
-	 }
-	 _map[0][0] = BlockType::UL_Edge;
-	 _map[0][_width - 1] = BlockType::UR_Edge;
-	 _map[_height - 1][0] = BlockType::BL_Edge;
-	 _map[_height - 1][_width - 1] = BlockType::BR_Edge;
-}
 
-bool Tetris::isDuplicateWith(Block* block) {
+bool Tetris::CanMoveTo(Block* block, Direction direction) {
+
+	int dy, dx;
+	dy = dx = 0;
+	
+	switch (direction) {
+		case Direction::up:
+			dy = -1;
+			break;
+		case Direction::down:
+			dy = 1;
+			break;
+		case Direction::left:
+			dx = -1;
+			break;
+		case Direction::right:
+			dx = 1;
+			break;
+	}
+
 	int posY = block->getLocation().y;
 	int posX = block->getLocation().x;
 
@@ -37,12 +35,12 @@ bool Tetris::isDuplicateWith(Block* block) {
 
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
-			if ((posY + i >= 0) && (posY + i < _height) && (posX + j >= 0) && (posX + j < _width) && array[i][j] != BlockType::Empty
-			&& _map[posY + i][posX + j] != BlockType::Empty ) { return true; }
+			if ( array[i][j] != BlockType::Empty && (posY + i + dy >= _height || posY + i + dy < 0 || posX + j + dx >= _width 
+				|| posX + j + dx < 0 || _map[posY + i + dy][posX + j + dx] != BlockType::Empty)) return false;
 		}
 	}
 	
-	return false;
+	return true;
 }
 
 void Tetris::ApplyBlock(Block* block) {
@@ -87,24 +85,6 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 	for (int i = 0; i < _height; ++i) {
 		for (int j = 0; j < _width; ++j) {
 			switch(tempMap[i][j]) {
-				case BlockType::H_Wall:
-					_printBuf[i] += "早";
-					break;
-				case BlockType::V_Wall:
-					_printBuf[i] += "收";
-					break;
-				case BlockType::UL_Edge:
-					_printBuf[i] += "旨";
-					break;
-				case BlockType::UR_Edge:
-					_printBuf[i] += "旬";
-					break;
-				case BlockType::BL_Edge:
-					_printBuf[i] += "曲";
-					break;
-				case BlockType::BR_Edge:
-					_printBuf[i] += "旭";
-					break;
 				case BlockType::Special1:
 					_printBuf[i] += "≠"; 
 					break;
@@ -131,24 +111,6 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 		_printBuf[i] += " 早  ";
 		for (int j = 0; j < 5; ++j) {
 			switch(nextArray[i - 2][j]) {
-				case BlockType::H_Wall:
-					_printBuf[i] += "早";
-					break;
-				case BlockType::V_Wall:
-					_printBuf[i] += "收";
-					break;
-				case BlockType::UL_Edge:
-					_printBuf[i] += "旨";
-					break;
-				case BlockType::UR_Edge:
-					_printBuf[i] += "旬";
-					break;
-				case BlockType::BL_Edge:
-					_printBuf[i] += "曲";
-					break;
-				case BlockType::BR_Edge:
-					_printBuf[i] += "旭";
-					break;
 				case BlockType::Special1:
 					_printBuf[i] += "≠"; 
 					break;

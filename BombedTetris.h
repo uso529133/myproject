@@ -1,18 +1,17 @@
+/*
+#ifndef BOMBEDTETRIS_H
+#define BOMBEDTETRIS_H
 
-#ifndef TETRIS_H
-#define TETRIS_H
-
+#include "Tetris.h"
 #include "Block.h"
 #include <string>
 using std::string;
 
-enum class Direction { up, down, left, right };
-
-class Tetris {
+class BombedTetris : public Tetris {
 public:
 	Tetris(int width = 10, int height = 15);
 	
-	bool CanMoveTo(Block* block, Direction direction);
+	bool isDuplicateWith(Block* block);
 	void ApplyBlock(Block* block);
 	// remove completed lines
 	virtual void RemoveCompleted();
@@ -38,4 +37,5 @@ private:
 	int _score;
 };
 
-#endif /* TETRIS_H */
+#endif /* BOMBEDTETRIS_H */
+*/

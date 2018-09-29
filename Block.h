@@ -6,7 +6,7 @@
 #include <vector>
 using std::vector;
 
-enum class BlockType { Empty, Normal, Special1, Special2, Special3, V_Wall, H_Wall, UL_Edge, UR_Edge, BL_Edge, BR_Edge};
+enum class BlockType { Empty, Normal, Special1, Special2, Special3};
 
 class Block {
 public:

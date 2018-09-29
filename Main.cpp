@@ -23,23 +23,18 @@ int main() {
 	
 	while (true) {
 		if (count-- == 0) {
-			block->MoveBy(1, 0);
-			if (game->isDuplicateWith(block)) {
-				block->MoveBy(-1, 0);
-				game->ApplyBlock(block);
-				block = nextBlock;
-				nextBlock = factory.MakeBlock(width);
-				game->RemoveCompleted();
-				
-				if (game->isDuplicateWith(block)) {
-					game->RefreshBuffer(block, nextBlock);
-					game->PrintBuffer(block);
-					
-					break;
-				}
+			
+			if (game->CanMoveTo(block, Direction::down)) {
+				block->MoveBy(1, 0);
+			} else {
+					game->ApplyBlock(block);
+					block = nextBlock;
+					nextBlock = factory.MakeBlock(width);
 			}
 			count = 4;
+			
 		}
+		
 		
 		if (kbhit()) {
 			input = getch();
@@ -47,25 +42,19 @@ int main() {
 				switch (getch()) {
 					case Key::Up:
 						block->Rotate();
-						if (game->isDuplicateWith(block)) { block->UnRotate(); }
 						break;
 					case Key::Down:
-						block->MoveBy(1, 0);
-						if (game->isDuplicateWith(block)) { block->MoveBy(-1, 0); }
+						if (game->CanMoveTo(block, Direction::down)) { block->MoveBy(1, 0); }
 						break;
 					case Key::Left:
-						block->MoveBy(0, -1);
-						if (game->isDuplicateWith(block)) { block->MoveBy(0, 1); }
+						if (game->CanMoveTo(block, Direction::left)) { block->MoveBy(0, -1); }
 						break;
 					case Key::Right:
-						block->MoveBy(0, 1);
-						if (game->isDuplicateWith(block)) { block->MoveBy(0, -1); }
+						if (game->CanMoveTo(block, Direction::right)) { block->MoveBy(0, 1); }
 						break;
 				}
 			} else if (input == 32) {
-				while (!game->isDuplicateWith(block)) { block->MoveBy(1, 0); }
-				block->MoveBy(-1, 0);
-				if (game->isDuplicateWith(block)) { break; }
+				while (game->CanMoveTo(block, Direction::down)) { block->MoveBy(1, 0); }
 				game->ApplyBlock(block);
 				block = nextBlock;
 				nextBlock = factory.MakeBlock(width);
