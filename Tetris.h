@@ -26,8 +26,9 @@ public:
 
 private: 
 	// for RemoveCompleted()
-	virtual bool isCompleteLine(int line) const;
+	virtual bool isCompleteLine(int y, int x) const;
 	virtual void RemoveLine(int line);
+	int GetAdjacent(int y, int x);
 	// for init
 	void BuildWalls();
 	// map infos

@@ -76,13 +76,14 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
-			if (posY + i > 0 && posX + j > 0 && posY + i < _height - 1 
-				&& posX + j < _width - 1 && array[i][j] != BlockType::Empty)
+			if (posY + i >= 0 && posX + j >= 0 && posY + i < _height - 1 
+				&& posX + j < _width && array[i][j] != BlockType::Empty)
 					tempMap[posY + i][posX + j] = array[i][j];
 		}
 	}
 
 	for (int i = 0; i < _height; ++i) {
+		_printBuf[i] += "早";
 		for (int j = 0; j < _width; ++j) {
 			switch(tempMap[i][j]) {
 				case BlockType::Special1:
@@ -102,8 +103,9 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 					break;
 			}
 		}
+		_printBuf[i] += "早";
 	}
-	 
+	 /*
 	_printBuf[0] += " 旨收收收收收收收旬";
 	_printBuf[1] += " 早   THE NEXT   早";
 	
@@ -141,7 +143,7 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 	_printBuf[18] += "  //github.com/u";
 	_printBuf[19] += "  so529133/simpl";
 	_printBuf[20] += "  eTetris.git";
-	
+	*/
 }
 
 const int Tetris::GetScore() {
@@ -160,18 +162,23 @@ void Tetris::PrintBuffer(Block* block) {
 }
 
 void Tetris::RemoveCompleted() {
-	int score = 0;
+	//int score = 0;
 	
-	for (int line = _height - 2; line > 1; --line) {
-		while (isCompleteLine(line)) {
-			RemoveLine(line);
-			++score;
+	RESTART:
+		
+	for (int i = _height - 1; i <= 0; --i) {
+		for (int j = 0; j < _width; ++j) {
+			if (GetAdjacent(i, j) >= 4) {
+				RemoveAdjacent(i, j);
+				goto RESTART;
+			}
 		}
-	}
-	_score += score * 100;
+	} 
+	
+	//_score += score * 100;
 }
 
-bool Tetris::isCompleteLine(int line) const {
+bool Tetris::isCompleteLine(int y, int x) const {
 	for (int i = 1; i < _width - 1; ++i) {
 		if (_map[line][i] == BlockType::Empty) { return false; }
 	}
