@@ -33,8 +33,8 @@ bool Tetris::CanMoveTo(Block* block, Direction direction) {
 
 	const auto& array = block->getArray();
 
-	for (int i = 0; i < 5; ++i) {
-		for (int j = 0; j < 5; ++j) {
+	for (int i = 0; i < array.size(); ++i) {
+		for (int j = 0; j < array.size(); ++j) {
 			if ( array[i][j] != BlockType::Empty && (posY + i + dy >= _height || posY + i + dy < 0 || posX + j + dx >= _width 
 				|| posX + j + dx < 0 || _map[posY + i + dy][posX + j + dx] != BlockType::Empty)) return false;
 		}
@@ -49,14 +49,15 @@ void Tetris::ApplyBlock(Block* block) {
 
 	const auto& array = block->getArray();
 	
-	for (int i = 0; i < 5; ++i) {
-		for (int j = 0; j < 5; ++j) {
+	for (int i = 0; i < array.size(); ++i) {
+		for (int j = 0; j < array.size(); ++j) {
 			if ((posY + i >= 0) && (posY + i < _height) && (posX + j >= 0) && (posX + j < _width) && array[i][j] != BlockType::Empty) { 
 				_map[posY + i][posX + j] = array[i][j];
 			}
 		}
 	}
 	
+	ApplyGravity();
 	block->setChanged(true);
 }
 
@@ -74,8 +75,8 @@ void Tetris::RefreshBuffer(Block* block, Block* nextBlock) {
 	const auto& array = block->getArray();
 	const auto& nextArray = nextBlock->getArray();
 
-	for (int i = 0; i < 5; ++i) {
-		for (int j = 0; j < 5; ++j) {
+	for (int i = 0; i < array.size(); ++i) {
+		for (int j = 0; j < array.size(); ++j) {
 			if (posY + i >= 0 && posX + j >= 0 && posY + i < _height - 1 
 				&& posX + j < _width && array[i][j] != BlockType::Empty)
 					tempMap[posY + i][posX + j] = array[i][j];
@@ -161,45 +162,60 @@ void Tetris::PrintBuffer(Block* block) {
 	}
 }
 
+int RemoveAdjacent(vector<vector<BlockType>>& A, int y, int x, BlockType bType) {
+	if (y < 0 || x < 0 || y >= A.size() || x >= A[0].size() || A[y][x] != bType || bType == BlockType::Empty)
+		return 0;	
+	
+	A[y][x] = BlockType::Empty;
+	
+	int connected = 1;
+	
+	connected += RemoveAdjacent(A, y + 1, x, bType);
+	connected += RemoveAdjacent(A, y, x + 1, bType);
+	connected += RemoveAdjacent(A, y - 1, x, bType);
+	connected += RemoveAdjacent(A, y, x - 1, bType);
+		
+	return connected;
+}
+
+template <class T>
+class TD;
+
 void Tetris::RemoveCompleted() {
-	//int score = 0;
+	int score = 0;
 	
 	RESTART:
-		
-	for (int i = _height - 1; i <= 0; --i) {
+	auto tempArray(_map);
+			
+	for (int i = _height - 1; i >= 0; --i) {
 		for (int j = 0; j < _width; ++j) {
-			if (GetAdjacent(i, j) >= 4) {
-				RemoveAdjacent(i, j);
+			if (RemoveAdjacent(tempArray, i, j, tempArray[i][j]) >= 3) {
+				score += RemoveAdjacent(_map, i, j, _map[i][j]) * 10;
 				goto RESTART;
 			}
 		}
 	} 
 	
-	//_score += score * 100;
-}
-
-bool Tetris::isCompleteLine(int y, int x) const {
-	for (int i = 1; i < _width - 1; ++i) {
-		if (_map[line][i] == BlockType::Empty) { return false; }
-	}
-	return true;
-}
-
-void Tetris::RemoveLine(int line) {
-	
-	for (int i = line; i > 1; --i) {
-		for (int j = 1; j < _width - 1; ++j) {
-			_map[i][j] = _map[i - 1][j];
-		}
-	}
-	
-	for (int i = 1; i < _width - 1; ++i) {
-		_map[1][i] = BlockType::Empty;
-	}
+	_score += score * 100;
 }
 
 string pauseStr = "* PAUSED *";
 string resumeStr = "PRESS 'R' TO RESUME";
+
+void Tetris::ApplyGravity() {
+	for (int i = 0; i < _width; ++i) {
+		for (int j = _height - 1; j >= 0; --j) {
+			if (_map[i][j] != BlockType::Empty) {
+				int k = j;
+				while (k < _height - 1 && _map[i][k + 1] == BlockType::Empty) {
+					_map[i][k + 1] = _map[i][k];
+					_map[i][k] = BlockType::Empty;
+					k++;
+				}
+			}
+		}
+	}
+}
 
 void Tetris::PauseGame(Block* block) {
 	_printBuf[_height / 2 - 1].replace(_width - pauseStr.size() / 2, pauseStr.size(), pauseStr);
@@ -219,7 +235,7 @@ void Tetris::ResumeGame(Block* block, Block* nextBlock) {
 		block->setChanged(true);
 		PrintBuffer(block);	
 		
-		_sleep(1000);
+		Sleep(1000);
 	}	
 }
 

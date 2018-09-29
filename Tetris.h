@@ -14,6 +14,7 @@ public:
 	
 	bool CanMoveTo(Block* block, Direction direction);
 	void ApplyBlock(Block* block);
+	void ApplyGravity();
 	// remove completed lines
 	virtual void RemoveCompleted();
 	const int GetScore();
@@ -25,10 +26,6 @@ public:
 	void ResumeGame(Block* block, Block* nextBlock);
 
 private: 
-	// for RemoveCompleted()
-	virtual bool isCompleteLine(int y, int x) const;
-	virtual void RemoveLine(int line);
-	int GetAdjacent(int y, int x);
 	// for init
 	void BuildWalls();
 	// map infos

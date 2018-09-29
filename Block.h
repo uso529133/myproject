@@ -11,12 +11,11 @@ enum class BlockType { Empty, Normal, Special1, Special2, Special3};
 class Block {
 public:
 	// constructor
-	Block(int y = 0, int x = 0);
+	Block(const char* p = 0, bool canRotate = true);
 	// for translating
 	void MoveBy(int dx, int dy);
 	void Rotate();
 	void UnRotate();
-	void Randomize();
 	// getter
 	const Point& getLocation();
 	const vector<vector<BlockType> >& getArray();

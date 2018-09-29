@@ -31,8 +31,10 @@ int main() {
 					block = nextBlock;
 					nextBlock = factory.MakeBlock(width);
 			}
-			count = 4;
 			
+			game->RemoveCompleted();
+			
+			count = 4;
 		}
 		
 		
@@ -53,6 +55,7 @@ int main() {
 						if (game->CanMoveTo(block, Direction::right)) { block->MoveBy(0, 1); }
 						break;
 				}
+				game->RemoveCompleted();
 			} else if (input == 32) {
 				while (game->CanMoveTo(block, Direction::down)) { block->MoveBy(1, 0); }
 				game->ApplyBlock(block);
