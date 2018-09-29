@@ -1,17 +1,17 @@
 # Project: Tetris
 # Makefile created by Dev-C++ 5.11
 
-CPP      = g++.exe --std=c++14 -D__DEBUG__
-CC       = gcc.exe -D__DEBUG__
+CPP      = g++.exe --std=c++14
+CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = Block.o Blocks.o Main.o Tetris.o TetrisFactory.o
-LINKOBJ  = Block.o Blocks.o Main.o Tetris.o TetrisFactory.o
-LIBS     = -L"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -static-libgcc -m32 -g3
+OBJ      = Block.o Blocks.o Main.o Tetris.o TetrisFactory.o BombedTetrisFactory.o
+LINKOBJ  = Block.o Blocks.o Main.o Tetris.o TetrisFactory.o BombedTetrisFactory.o
+LIBS     = -L"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -static-libgcc -m32
 INCS     = -I"C:/Program Files/Dev-Cpp/MinGW64/include" -I"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"C:/Program Files/Dev-Cpp/MinGW64/include" -I"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
 BIN      = Tetris.exe
-CXXFLAGS = $(CXXINCS) -m32 -g3
-CFLAGS   = $(INCS) -m32 -g3
+CXXFLAGS = $(CXXINCS) -m32
+CFLAGS   = $(INCS) -m32
 RM       = rm.exe -f
 
 .PHONY: all all-before all-after clean clean-custom
@@ -38,3 +38,6 @@ Tetris.o: Tetris.cpp
 
 TetrisFactory.o: TetrisFactory.cpp
 	$(CPP) -c TetrisFactory.cpp -o TetrisFactory.o $(CXXFLAGS)
+
+BombedTetrisFactory.o: BombedTetrisFactory.cpp
+	$(CPP) -c BombedTetrisFactory.cpp -o BombedTetrisFactory.o $(CXXFLAGS)

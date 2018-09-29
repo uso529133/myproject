@@ -9,8 +9,8 @@ class TetrisFactory {
 public:
 	TetrisFactory();
 	
-	Block* MakeBlock(int width);
-	Tetris* MakeTetris(int width, int height);
+	virtual Block* MakeBlock(int width);
+	virtual Tetris* MakeTetris(int width, int height);
 };
 
 #endif /* TETRISFACTORY_H */

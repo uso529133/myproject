@@ -1,5 +1,6 @@
 
 #include "Tetris.h"
+#include "BombedTetrisFactory.h"
 #include "TetrisFactory.h"
 #include <conio.h>
 
@@ -9,7 +10,7 @@ const int height = 22;
 enum Key { Up = 72, Down = 80, Left = 75, Right = 77 };
 
 int main() {
-	TetrisFactory   factory;
+	BombedTetrisFactory   factory;
 
 	int             input;
 	int             count;
